@@ -51,10 +51,15 @@ public class ToDoServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// get post parameter
 		String todoDescr = request.getParameter("todo");
+		String priority = request.getParameter("priority");
+		if (priority.equals("")) {
+			priority = "not defined";
+		}
+
 		if (todoDescr!=null&&todoDescr.length()>0) {
 			//Save button
 			//create todo
-			ToDo todo = new ToDo(todoDescr, new Date());
+			ToDo todo = new ToDo(todoDescr, new Date(), priority);
             try {
                 service.addToDo(todo);
             } catch (SQLException e) {
@@ -80,7 +85,8 @@ public class ToDoServlet extends HttpServlet {
 
             for (ToDo todo : todos) {
                 table.append("<tr><td>"+todo.getDescription()+"</td>");
-                table.append("<td>"+todo.getCreated()+"</td></tr>");
+                table.append("<td>"+todo.getCreated()+"</td>");
+				table.append("<td>"+todo.getPriority() +"</td></tr>");
             }
             if (table.length()==0) table.append("<tr><td>Currently, there are no TODOs for you!</td></tr>");
 
@@ -108,8 +114,9 @@ public class ToDoServlet extends HttpServlet {
 				"<h1>Enter TODO</h1>" +
 				"<form role=\"form\" method=\"POST\" action=\"\">" +
 		  			"<div class=\"form-group\">" +
-						"<input type=\"text\" name=\"todo\" class=\"form-control\" size=\"50\" placeholder=\"Enter todo\" />" + 
-						"<button type=\"submit\" id=\"save\" class=\"btn btn-default\">Save</button>" +
+						"<input type=\"text\" name=\"todo\" class=\"form-control\" size=\"50\" placeholder=\"Enter todo\" />" +
+						"<input type=\"text\" name=\"priority\" class=\"form-control\" size=\"50\" placeholder=\"Enter priority\" />" +
+				"<button type=\"submit\" id=\"save\" class=\"btn btn-default\">Save</button>" +
 					"</div>" +
 				"</form>" +
 			"</section>" +
