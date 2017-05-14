@@ -6,19 +6,19 @@ public class ToDo {
 	
 	private String description;
 	private Date created;
-	private String priority;
+	private int priority;
 
 	public ToDo() {
 
 	}
 
-	public ToDo(String description, String created, String priority) {
+	public ToDo(String description, String created, int priority) {
 		this.description = description;
 		this.created = new Date(created);
 		this.priority = priority;
 	}
 
-	public ToDo(String description, Date created, String priority) {
+	public ToDo(String description, Date created, int priority) {
 		this.description = description;
 		this.created = created;
 		this.priority = priority;
@@ -37,11 +37,11 @@ public class ToDo {
 		this.created = created;
 	}
 
-	public String getPriority() {
+	public int getPriority() {
 		return priority;
 	}
 
-	public void setPriority(String priority) {
+	public void setPriority(int priority) {
 		this.priority = priority;
 	}
 }

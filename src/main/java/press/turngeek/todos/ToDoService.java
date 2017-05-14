@@ -30,7 +30,7 @@ public class ToDoService {
             insertPreparedStatement = connection.prepareStatement(insertQuery);
             insertPreparedStatement.setString(1, toDo.getDescription());
             insertPreparedStatement.setDate(2, new Date(toDo.getCreated().getTime()));
-            insertPreparedStatement.setString(3, toDo.getPriority());
+            insertPreparedStatement.setInt(3, toDo.getPriority());
             inserted = insertPreparedStatement.executeUpdate();
             insertPreparedStatement.close();
         } catch (SQLException e) {
@@ -43,12 +43,12 @@ public class ToDoService {
 
     public List<ToDo> getAllTodos() throws SQLException {
         Statement statement = connection.createStatement();
-        ResultSet rs = statement.executeQuery("SELECT description, created, priority FROM todo");
+        ResultSet rs = statement.executeQuery("SELECT description, created, priority FROM todo ORDER BY priority DESC");
         List<ToDo> allToDos = new ArrayList<ToDo>();
         while (rs.next()) {
             String description = rs.getString("description");
             Date created = rs.getDate("created");
-            String priority = rs.getString("priority");
+            int priority = rs.getInt("priority");
             ToDo toDo = new ToDo(description, new java.util.Date(created.getTime()), priority);
             allToDos.add(toDo);
         }
