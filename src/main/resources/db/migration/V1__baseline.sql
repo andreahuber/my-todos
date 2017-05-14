@@ -1,1 +1,1 @@
-CREATE TABLE todo(id BIGINT auto_increment, description VARCHAR(255) NOT NULL, created DATE)
+CREATE TABLE todo(id BIGINT auto_increment, description VARCHAR(255) NOT NULL, created DATE, PRIMARY KEY (id))
