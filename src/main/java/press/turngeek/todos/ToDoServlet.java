@@ -51,9 +51,10 @@ public class ToDoServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// get post parameter
 		String todoDescr = request.getParameter("todo");
-		String priority = request.getParameter("priority");
-		if (priority.equals("")) {
-			priority = "not defined";
+		String priorityString = request.getParameter("priority");
+		int priority = 0;
+		if (!priorityString.equals("")) {
+			priority = Integer.valueOf(priorityString);
 		}
 
 		if (todoDescr!=null&&todoDescr.length()>0) {
