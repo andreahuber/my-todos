@@ -3,19 +3,32 @@ package press.turngeek.db;
 import com.mysql.cj.jdbc.MysqlDataSource;
 
 import javax.sql.DataSource;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 public class DBConnection {
 
-    private static final String DB_DRIVER = "com.mysql.jdbc.Driver";
-    private static final String DB_CONNECTION = "jdbc:mysql://db.f4.htw-berlin.de:3306/_hubera__todos?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC";
-    private static final String DB_USER = "hubera";
-    private static final String DB_PASSWORD = "Frisk-Fisk1703!";
-
     public static DataSource getDatasource() {
+        Properties prop = new Properties();
+        InputStream input = null;
         MysqlDataSource datasource = new MysqlDataSource();
-        datasource.setUrl(DB_CONNECTION);
-        datasource.setUser(DB_USER);
-        datasource.setPassword(DB_PASSWORD);
+        try {
+            input = datasource.getClass().getClassLoader().getResourceAsStream("db.properties");
+            prop.load(input);
+            datasource.setUrl(prop.getProperty("DB_CONNECTION"));
+            datasource.setUser(prop.getProperty("DB_USER"));
+            datasource.setPassword(prop.getProperty("DB_PASSWORD"));
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        } finally {
+            try {
+                input.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         return datasource;
     }
 
