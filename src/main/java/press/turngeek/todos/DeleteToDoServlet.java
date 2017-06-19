@@ -45,6 +45,6 @@ public class DeleteToDoServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		//redirect
-		response.sendRedirect("/todos");
+		response.sendRedirect("todos");
 	}
 }
